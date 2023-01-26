@@ -25,9 +25,13 @@ const cards = [
   { name: 'thor', img: 'thor.jpg' }
 ];
 
-const memoryGame = new MemoryGame(cards);
 
-window.addEventListener('load', (event) => {
+function startGame() {
+  const memoryGame = new MemoryGame(cards);
+  memoryGame.shuffleCards();
+  document.querySelector('#pairs-clicked').textContent = 0;
+  document.querySelector('#pairs-guessed').textContent = 0;
+
   let html = '';
   memoryGame.cards.forEach((pic) => {
     html += `
@@ -44,8 +48,47 @@ window.addEventListener('load', (event) => {
   // Bind the click event of each element to a function
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
-      // TODO: write some code here
-      console.log(`Card clicked: ${card}`);
+      let flippedCards = document.querySelectorAll('.turned:not(.blocked)');
+      
+      // cannot turn more then 2 cards at a time
+      if (flippedCards.length >= 2) return;
+
+      card.classList.add('turned');
+      flippedCards = document.querySelectorAll('.turned:not(.blocked)');
+
+      if (flippedCards.length === 2) {
+        if (memoryGame.checkIfPair(flippedCards[0].dataset.cardName, flippedCards[1].dataset.cardName)) {
+          document.querySelector('#pairs-guessed').textContent = memoryGame.pairsGuessed;
+          flippedCards.forEach(card => {
+            card.classList.add('blocked');
+          })
+          if (memoryGame.checkIfFinished()) {
+            setTimeout(()=>{
+              document.querySelector('dialog > p > span').textContent = memoryGame.pairsClicked;
+              document.querySelector('dialog').showModal();
+            }, 500)
+          }
+        } else {
+          setTimeout(()=>{
+            flippedCards.forEach(card => {
+              card.classList.remove('turned');
+            }) 
+          }, 3000)
+        }
+
+        document.querySelector('#pairs-clicked').textContent = memoryGame.pairsClicked;
+
+      }
+
     });
+
+  });  
+}
+
+window.addEventListener('load', (event) => {
+  startGame();
+  document.querySelector('dialog > button').addEventListener('click', ()=>{
+    startGame();
+    document.querySelector('dialog').close();
   });
 });

@@ -88,3 +88,7 @@ p {
   font-size: 20px;
   text-align: center;
 }
+
+dialog::backdrop {
+  backdrop-filter:  brightness(50%) blur(2px);
+}
