@@ -41,4 +41,4 @@ function randomInt(a, b) {
   return Math.floor(Math.random() * (b-a) + a)
 }
 
-export default MemoryGame
+// export default MemoryGame

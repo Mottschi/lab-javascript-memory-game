@@ -1,4 +1,4 @@
-import MemoryGame from "./memory.js";
+// import MemoryGame from "./memory.js";
 const cards = [
   { name: 'aquaman', img: 'aquaman.jpg' },
   { name: 'batman', img: 'batman.jpg' },
@@ -85,6 +85,8 @@ function startGame() {
 
   });  
 }
+
+
 startGame();
 document.querySelector('dialog > button').addEventListener('click', ()=>{
   startGame();
