@@ -48,13 +48,13 @@ function startGame() {
   // Bind the click event of each element to a function
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
-      let flippedCards = document.querySelectorAll('.turned:not(.blocked)');
+      let flippedCards = [...document.querySelectorAll('.turned:not(.blocked)')];
       
       // cannot turn more then 2 cards at a time
       if (flippedCards.length >= 2) return;
 
       card.classList.add('turned');
-      flippedCards = document.querySelectorAll('.turned:not(.blocked)');
+      flippedCards.push(card);
 
       if (flippedCards.length === 2) {
         if (memoryGame.checkIfPair(flippedCards[0].dataset.cardName, flippedCards[1].dataset.cardName)) {
