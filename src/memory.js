@@ -27,8 +27,8 @@ class MemoryGame {
   }
 
   checkIfFinished() {
-    if (this.pairsGuessed === this.cards.length / 2) return true;
-    return false;
+    return this.pairsGuessed === this.cards.length / 2;
+    
   }
 }
 
